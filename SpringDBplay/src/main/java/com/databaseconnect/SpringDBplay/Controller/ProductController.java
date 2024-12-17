@@ -19,6 +19,12 @@ public class ProductController {
     @Autowired
     private ProductsRepository productRepository;
 
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "your rest endpoint works";
+    }
+
+
     @GetMapping("/products")
     public List<String> getAllProductNames() {
         return productRepository.findAll()

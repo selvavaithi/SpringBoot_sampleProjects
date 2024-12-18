@@ -18,15 +18,15 @@ public class OrderService {
     public OrderDTO createOrder(OrderDTO order){
 
         OrderDTO orderDTO = new OrderDTO();
-        order.setId(order.getId());
-        order.setCustomerName(order.getCustomerName());
-        order.setProductName(order.getProductName());
-        order.setQuantity(order.getQuantity());
-        order.setPrice(order.getPrice());
-        order.setOrderDate(order.getOrderDate());
-        order.setStatus(String.valueOf(order.getStatus()));
+        orderDTO.setId(order.getId());
+        orderDTO.setCustomerName(order.getCustomerName());
+        orderDTO.setProductName(order.getProductName());
+        orderDTO.setQuantity(order.getQuantity());
+        orderDTO.setPrice(order.getPrice());
+        orderDTO.setOrderDate(order.getOrderDate());
+        orderDTO.setStatus(String.valueOf(order.getStatus()));
 
-        System.out.println("RESPONSE:: "+orderDTO.toString());
+//        System.out.println("RESPONSE:: "+orderDTO.toString());
 
         return orderDTO;
     }

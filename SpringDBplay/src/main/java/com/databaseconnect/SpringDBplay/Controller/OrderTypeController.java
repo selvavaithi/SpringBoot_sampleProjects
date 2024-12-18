@@ -21,10 +21,10 @@ public class OrderTypeController {
         return ResponseEntity.ok(orderService.createMultipleOrdersAndReturnDtos());
     }
 
-   // @PostMapping("/order/create")
+//    @PostMapping("/order/create")
     @RequestMapping(value = "/order/create", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO){
-        System.out.println("Entering the process");
+//        System.out.println("Entering the process");
 
         return new ResponseEntity<>(orderService.createOrder(orderDTO), HttpStatus.CREATED);
 

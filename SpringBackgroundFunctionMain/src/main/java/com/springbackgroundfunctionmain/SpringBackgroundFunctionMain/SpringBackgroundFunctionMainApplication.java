@@ -1,6 +1,9 @@
 package com.springbackgroundfunctionmain.SpringBackgroundFunctionMain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springbackgroundfunctionmain.SpringBackgroundFunctionMain.Beans.CustomJsonProcess;
+import com.springbackgroundfunctionmain.SpringBackgroundFunctionMain.Beans.PubSubMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 @SpringBootApplication
@@ -26,13 +30,26 @@ public class SpringBackgroundFunctionMainApplication {
 	}
 
 	@Bean
-	public Function<Map<String, Object>, Map<String, Object>> processJson() {
+	public Consumer<PubSubMessage> processJson() {
 		return input -> {
-			List<Double> numbers = (List<Double>) input.get("numbers");
 
-			//Message<String> message = MessageBuilder.withPayload(payload).setHeader(FunctionInvoker.HTTP_STATUS_CODE, 404).build();
+			// Create ObjectMapper instance
+			ObjectMapper objectMapper = new ObjectMapper();
 
-			return customJsonProcess.processNumbers(numbers);
+			// Parse JSON string into a Map
+			Map<String, List<Double>> map = null;
+			try {
+				map = objectMapper.readValue(input.getAttributes().get("numbers"), Map.class);
+			} catch (JsonProcessingException e) {
+				throw new RuntimeException(e);
+			}
+
+			// Extract the "numbers" field as a List<Double>
+			List<Double> numbers = map.get("numbers");
+
+//			List<Double> numbers = (List<Double>) input.getAttributes().get("numbers");
+
+			Map<String, Object> getReturn = customJsonProcess.processNumbers(numbers);
 		};
 	}
 

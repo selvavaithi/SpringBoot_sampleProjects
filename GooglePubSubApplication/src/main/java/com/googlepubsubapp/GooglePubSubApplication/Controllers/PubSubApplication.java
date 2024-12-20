@@ -32,7 +32,9 @@ public class PubSubApplication {
             @Qualifier("pubsubInputChannel") MessageChannel inputChannel,
             PubSubTemplate pubSubTemplate
     ){
-            PubSubInboundChannelAdapter adapter =
+        System.out.println("messageChannelAdapter");
+
+        PubSubInboundChannelAdapter adapter =
                     new PubSubInboundChannelAdapter(pubSubTemplate, "mytopic_pubsub_test-sub");
 
             adapter.setOutputChannel(inputChannel);
